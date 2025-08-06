@@ -33,8 +33,8 @@ void main() {
         when(mockRepository.validateInput(input)).thenReturn(true);
         when(mockRepository.add(input)).thenAnswer((_) async => expectedResult);
 
-        // Act
-        final result = await useCase.call(input);
+        // Act, we can explicitly call the 'call' method, or just useCase, this makes use of the darts callable classes, which is perfect for this use case
+        final result = await useCase.call(Params(input: input));
 
         // Assert
         expect(result.sum, equals(0));
@@ -62,7 +62,7 @@ void main() {
         when(mockRepository.add(input)).thenAnswer((_) async => expectedResult);
 
         // Act
-        final result = await useCase.call(input);
+        final result = await useCase.call(Params(input: input));
 
         // Assert
         expect(result.sum, equals(1));
@@ -88,7 +88,7 @@ void main() {
         when(mockRepository.add(input)).thenAnswer((_) async => expectedResult);
 
         // Act
-        final result = await useCase.call(input);
+        final result = await useCase.call(Params(input: input));
 
         // Assert
         expect(result.sum, equals(15));
@@ -109,7 +109,7 @@ void main() {
 
           // Act & Assert
           expect(
-            () async => await useCase.call(input),
+            () async => await useCase.call(Params(input: input)),
             throwsA(isA<CalculatorException>()),
           );
           verify(mockRepository.validateInput(input));
@@ -127,7 +127,7 @@ void main() {
 
         // Act & Assert
         expect(
-          () async => await useCase.call(input),
+          () async => await useCase.call(Params(input: input)),
           throwsA(isA<CalculatorException>()),
         );
         verify(mockRepository.validateInput(input));
