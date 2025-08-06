@@ -1,26 +1,24 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part 'calculation_result.freezed.dart';
-
 /// Represents the result of a string calculator operation
 /// Contains the computed sum and metadata about the calculation
-@freezed
-abstract class CalculationResult with _$CalculationResult {
-  const factory CalculationResult({
-    /// The computed sum of all valid numbers
-    required int sum,
+class CalculationResult {
+  /// The computed sum of all valid numbers
+  final int sum;
 
-    /// List of individual numbers that were processed
-    required List<int> processedNumbers,
+  /// List of individual numbers that were processed
+  final List<int> processedNumbers;
 
-    /// List of delimiters that were used in parsing
-    required List<String> usedDelimiters,
+  /// List of delimiters that were used in parsing
+  final List<String> usedDelimiters;
 
-    /// The original input string
-    required String originalInput,
-  }) = _CalculationResult;
+  /// The original input string
+  final String originalInput;
 
-  const CalculationResult._();
+  const CalculationResult({
+    required this.sum,
+    required this.processedNumbers,
+    required this.usedDelimiters,
+    required this.originalInput,
+  });
 
   /// Factory constructor for successful calculation
   factory CalculationResult.success({
@@ -37,4 +35,35 @@ abstract class CalculationResult with _$CalculationResult {
     );
   }
 
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! CalculationResult) return false;
+    return sum == other.sum &&
+        _listEquals(processedNumbers, other.processedNumbers) &&
+        _listEquals(usedDelimiters, other.usedDelimiters) &&
+        originalInput == other.originalInput;
+  }
+
+  @override
+  int get hashCode {
+    return sum.hashCode ^
+        processedNumbers.hashCode ^
+        usedDelimiters.hashCode ^
+        originalInput.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'CalculationResult(sum: $sum, processedNumbers: $processedNumbers, usedDelimiters: $usedDelimiters, originalInput: $originalInput)';
+  }
+
+  bool _listEquals<T>(List<T>? a, List<T>? b) {
+    if (a == null) return b == null;
+    if (b == null || a.length != b.length) return false;
+    for (int index = 0; index < a.length; index++) {
+      if (a[index] != b[index]) return false;
+    }
+    return true;
+  }
 }

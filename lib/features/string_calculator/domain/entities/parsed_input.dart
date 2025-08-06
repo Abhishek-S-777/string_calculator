@@ -1,26 +1,24 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part 'parsed_input.freezed.dart';
-
 /// Represents the parsed input from the string calculator
 /// Contains the extracted numbers and delimiters from the raw input
-@freezed
-abstract class ParsedInput with _$ParsedInput {
-  const factory ParsedInput({
-    /// The original raw input string
-    required String rawInput,
+class ParsedInput {
+  /// The original raw input string
+  final String rawInput;
 
-    /// List of delimiters found in the input (default: [',', '\n'])
-    required List<String> delimiters,
+  /// List of delimiters found in the input (default: [',', '\n'])
+  final List<String> delimiters;
 
-    /// The numbers part of the input (without delimiter declarations)
-    required String numbersString,
+  /// The numbers part of the input (without delimiter declarations)
+  final String numbersString;
 
-    /// Whether custom delimiters were specified in the input
-    @Default(false) bool hasCustomDelimiters,
-  }) = _ParsedInput;
+  /// Whether custom delimiters were specified in the input
+  final bool hasCustomDelimiters;
 
-  const ParsedInput._();
+  const ParsedInput({
+    required this.rawInput,
+    required this.delimiters,
+    required this.numbersString,
+    this.hasCustomDelimiters = false,
+  });
 
   /// Factory constructor for creating ParsedInput with default delimiters
   factory ParsedInput.withDefaults(String rawInput) {
@@ -44,5 +42,37 @@ abstract class ParsedInput with _$ParsedInput {
       numbersString: numbersString,
       hasCustomDelimiters: true,
     );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ParsedInput) return false;
+    return rawInput == other.rawInput &&
+        _listEquals(delimiters, other.delimiters) &&
+        numbersString == other.numbersString &&
+        hasCustomDelimiters == other.hasCustomDelimiters;
+  }
+
+  @override
+  int get hashCode {
+    return rawInput.hashCode ^
+        delimiters.hashCode ^
+        numbersString.hashCode ^
+        hasCustomDelimiters.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'ParsedInput(rawInput: $rawInput, delimiters: $delimiters, numbersString: $numbersString, hasCustomDelimiters: $hasCustomDelimiters)';
+  }
+
+  bool _listEquals<T>(List<T>? a, List<T>? b) {
+    if (a == null) return b == null;
+    if (b == null || a.length != b.length) return false;
+    for (int index = 0; index < a.length; index++) {
+      if (a[index] != b[index]) return false;
+    }
+    return true;
   }
 }
