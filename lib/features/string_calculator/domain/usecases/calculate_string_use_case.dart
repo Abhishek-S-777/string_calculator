@@ -15,11 +15,6 @@ class CalculateStringUseCase implements UseCase<CalculationResult, Params> {
   /// Throws [CalculatorException] for any validation or parsing errors
   @override
   Future<CalculationResult> call(Params params) async {
-    // Input validation
-    if (!repository.validateInput(params.input)) {
-      throw CalculatorException.invalidFormat(params.input);
-    }
-
     // Delegate to repository for the actual calculation
     return await repository.add(params.input);
   }

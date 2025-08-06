@@ -3,15 +3,13 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
+import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:string_calculator/features/string_calculator/domain/entities/calculation_result.dart'
-    as _i3;
-import 'package:string_calculator/features/string_calculator/domain/entities/parsed_input.dart'
     as _i2;
 import 'package:string_calculator/features/string_calculator/domain/repositories/calculator_repository.dart'
-    as _i4;
+    as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -27,14 +25,9 @@ import 'package:string_calculator/features/string_calculator/domain/repositories
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeParsedInput_0 extends _i1.SmartFake implements _i2.ParsedInput {
-  _FakeParsedInput_0(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
-}
-
-class _FakeCalculationResult_1 extends _i1.SmartFake
-    implements _i3.CalculationResult {
-  _FakeCalculationResult_1(Object parent, Invocation parentInvocation)
+class _FakeCalculationResult_0 extends _i1.SmartFake
+    implements _i2.CalculationResult {
+  _FakeCalculationResult_0(Object parent, Invocation parentInvocation)
     : super(parent, parentInvocation);
 }
 
@@ -42,66 +35,21 @@ class _FakeCalculationResult_1 extends _i1.SmartFake
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockCalculatorRepository extends _i1.Mock
-    implements _i4.CalculatorRepository {
+    implements _i3.CalculatorRepository {
   MockCalculatorRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i5.Future<_i2.ParsedInput> parseInput(String? input) =>
-      (super.noSuchMethod(
-            Invocation.method(#parseInput, [input]),
-            returnValue: _i5.Future<_i2.ParsedInput>.value(
-              _FakeParsedInput_0(this, Invocation.method(#parseInput, [input])),
-            ),
-          )
-          as _i5.Future<_i2.ParsedInput>);
-
-  @override
-  _i5.Future<_i3.CalculationResult> calculate(_i2.ParsedInput? parsedInput) =>
-      (super.noSuchMethod(
-            Invocation.method(#calculate, [parsedInput]),
-            returnValue: _i5.Future<_i3.CalculationResult>.value(
-              _FakeCalculationResult_1(
-                this,
-                Invocation.method(#calculate, [parsedInput]),
-              ),
-            ),
-          )
-          as _i5.Future<_i3.CalculationResult>);
-
-  @override
-  _i5.Future<_i3.CalculationResult> add(String? numbers) =>
+  _i4.Future<_i2.CalculationResult> add(String? numbers) =>
       (super.noSuchMethod(
             Invocation.method(#add, [numbers]),
-            returnValue: _i5.Future<_i3.CalculationResult>.value(
-              _FakeCalculationResult_1(
+            returnValue: _i4.Future<_i2.CalculationResult>.value(
+              _FakeCalculationResult_0(
                 this,
                 Invocation.method(#add, [numbers]),
               ),
             ),
           )
-          as _i5.Future<_i3.CalculationResult>);
-
-  @override
-  bool validateInput(String? input) =>
-      (super.noSuchMethod(
-            Invocation.method(#validateInput, [input]),
-            returnValue: false,
-          )
-          as bool);
-
-  @override
-  List<int> extractNumbers(_i2.ParsedInput? parsedInput) =>
-      (super.noSuchMethod(
-            Invocation.method(#extractNumbers, [parsedInput]),
-            returnValue: <int>[],
-          )
-          as List<int>);
-
-  @override
-  void validateNumbers(List<int>? numbers) => super.noSuchMethod(
-    Invocation.method(#validateNumbers, [numbers]),
-    returnValueForMissingStub: null,
-  );
+          as _i4.Future<_i2.CalculationResult>);
 }

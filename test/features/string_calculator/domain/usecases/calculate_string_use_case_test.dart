@@ -30,7 +30,6 @@ void main() {
           originalInput: input,
         );
 
-        when(mockRepository.validateInput(input)).thenReturn(true);
         when(mockRepository.add(input)).thenAnswer((_) async => expectedResult);
 
         // Act, we can explicitly call the 'call' method, or just useCase, this makes use of the darts callable classes, which is perfect for this use case
@@ -40,8 +39,6 @@ void main() {
         expect(result.sum, equals(0));
         expect(result.processedNumbers, isEmpty);
         expect(result.originalInput, equals(input));
-        // verify if the validate input method was called with the input
-        verify(mockRepository.validateInput(input));
         // verify if the input that is gone to the method is the input that we have passed
         verify(mockRepository.add(input));
       });
@@ -58,7 +55,6 @@ void main() {
           originalInput: input,
         );
 
-        when(mockRepository.validateInput(input)).thenReturn(true);
         when(mockRepository.add(input)).thenAnswer((_) async => expectedResult);
 
         // Act
@@ -68,7 +64,6 @@ void main() {
         expect(result.sum, equals(1));
         expect(result.processedNumbers, equals([1]));
         expect(result.originalInput, equals(input));
-        verify(mockRepository.validateInput(input));
         verify(mockRepository.add(input));
       });
     });
@@ -84,7 +79,6 @@ void main() {
           originalInput: input,
         );
 
-        when(mockRepository.validateInput(input)).thenReturn(true);
         when(mockRepository.add(input)).thenAnswer((_) async => expectedResult);
 
         // Act
@@ -93,7 +87,6 @@ void main() {
         // Assert
         expect(result.sum, equals(15));
         expect(result.processedNumbers, equals([1, 2, 3, 4, 5]));
-        verify(mockRepository.validateInput(input));
         verify(mockRepository.add(input));
       });
     });
@@ -105,14 +98,11 @@ void main() {
           // Arrange
           const input = 'invalid';
 
-          when(mockRepository.validateInput(input)).thenReturn(false);
-
           // Act & Assert
           expect(
             () async => await useCase.call(Params(input: input)),
             throwsA(isA<CalculatorException>()),
           );
-          verify(mockRepository.validateInput(input));
           verifyNever(mockRepository.add(any));
         },
       );
@@ -122,7 +112,6 @@ void main() {
         const input = '1,-2';
         final exception = CalculatorException.negativesNotAllowed([-2]);
 
-        when(mockRepository.validateInput(input)).thenReturn(true);
         when(mockRepository.add(input)).thenThrow(exception);
 
         // Act & Assert
@@ -130,7 +119,6 @@ void main() {
           () async => await useCase.call(Params(input: input)),
           throwsA(isA<CalculatorException>()),
         );
-        verify(mockRepository.validateInput(input));
         verify(mockRepository.add(input));
       });
     });
