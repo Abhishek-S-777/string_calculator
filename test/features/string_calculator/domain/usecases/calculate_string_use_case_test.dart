@@ -97,13 +97,17 @@ void main() {
         () async {
           // Arrange
           const input = 'invalid';
+          final exception = CalculatorException.invalidFormat(input);
 
-          // Act & Assert
+          // Act
+          when(mockRepository.add(input)).thenThrow(exception);
+          
+          // Assert
           expect(
             () async => await useCase.call(Params(input: input)),
             throwsA(isA<CalculatorException>()),
           );
-          verifyNever(mockRepository.add(any));
+          verify(mockRepository.add(any));
         },
       );
 
