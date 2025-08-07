@@ -23,7 +23,7 @@ class CalculatorPage extends ConsumerWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: const Text('String Calculator'),
+        title: const Text('String Calculator Pro'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           IconButton(
