@@ -26,18 +26,29 @@ class CalculatorResultWidget extends ConsumerWidget {
   }
 
   Widget _buildPlaceholder(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Card(
       child: Container(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           children: [
-            Icon(Icons.calculate_outlined, size: 64, color: Colors.grey[400]),
+            Icon(
+              Icons.calculate_outlined,
+              size: 64,
+              color: isDark
+                  ? colorScheme.onSurface.withValues(alpha: 0.5)
+                  : Colors.grey[400],
+            ),
             const SizedBox(height: 16),
             Text(
               'Results will appear here',
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: Colors.grey[500]),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: isDark
+                    ? colorScheme.onSurface.withValues(alpha: 0.6)
+                    : Colors.grey[500],
+              ),
             ),
           ],
         ),
@@ -46,8 +57,13 @@ class CalculatorResultWidget extends ConsumerWidget {
   }
 
   Widget _buildErrorDisplay(BuildContext context, String errorMessage) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Card(
-      color: Colors.red[50],
+      color: isDark
+          ? colorScheme.errorContainer.withValues(alpha: 0.1)
+          : Colors.red[50],
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -55,12 +71,15 @@ class CalculatorResultWidget extends ConsumerWidget {
           children: [
             Row(
               children: [
-                Icon(Icons.error_outline, color: Colors.red[600]),
+                Icon(
+                  Icons.error_outline,
+                  color: isDark ? colorScheme.error : Colors.red[600],
+                ),
                 const SizedBox(width: 8),
                 Text(
                   'Error',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Colors.red[600],
+                    color: isDark ? colorScheme.error : Colors.red[600],
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -70,18 +89,23 @@ class CalculatorResultWidget extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: isDark ? colorScheme.surface : Colors.white,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.red[300]!),
+                border: Border.all(
+                  color: isDark
+                      ? colorScheme.error.withValues(alpha: 0.5)
+                      : Colors.red[300]!,
+                ),
               ),
               child: Row(
                 children: [
                   Expanded(
                     child: Text(
                       errorMessage,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: 'monospace',
                         fontSize: 14,
+                        color: isDark ? colorScheme.onSurface : Colors.black87,
                       ),
                     ),
                   ),
@@ -94,7 +118,11 @@ class CalculatorResultWidget extends ConsumerWidget {
                         ),
                       );
                     },
-                    icon: const Icon(Icons.copy, size: 20),
+                    icon: Icon(
+                      Icons.copy,
+                      size: 20,
+                      color: isDark ? colorScheme.onSurface : Colors.black54,
+                    ),
                     tooltip: 'Copy error message',
                   ),
                 ],
@@ -108,9 +136,11 @@ class CalculatorResultWidget extends ConsumerWidget {
 
   Widget _buildResultDisplay(BuildContext context, CalculatorState state) {
     final result = state.result!;
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Card(
-      color: Colors.green[50],
+      color: isDark ? Colors.green.withValues(alpha: 0.1) : Colors.green[50],
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -118,12 +148,15 @@ class CalculatorResultWidget extends ConsumerWidget {
           children: [
             Row(
               children: [
-                Icon(Icons.check_circle_outline, color: Colors.green[600]),
+                Icon(
+                  Icons.check_circle_outline,
+                  color: isDark ? Colors.green[400] : Colors.green[600],
+                ),
                 const SizedBox(width: 8),
                 Text(
                   'Result',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Colors.green[600],
+                    color: isDark ? Colors.green[400] : Colors.green[600],
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -146,7 +179,11 @@ Delimiters: ${result.usedDelimiters.join(', ')}
                       ),
                     );
                   },
-                  icon: const Icon(Icons.copy, size: 20),
+                  icon: Icon(
+                    Icons.copy,
+                    size: 20,
+                    color: isDark ? colorScheme.onSurface : Colors.black54,
+                  ),
                   tooltip: 'Copy result',
                 ),
               ],
@@ -158,25 +195,31 @@ Delimiters: ${result.usedDelimiters.join(', ')}
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: isDark ? colorScheme.surface : Colors.white,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.green[300]!),
+                border: Border.all(
+                  color: isDark
+                      ? Colors.green[400]!.withValues(alpha: 0.5)
+                      : Colors.green[300]!,
+                ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     'Sum',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.labelLarge?.copyWith(color: Colors.grey[600]),
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: isDark
+                          ? colorScheme.onSurface.withValues(alpha: 0.7)
+                          : Colors.grey[600],
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     '${result.sum}',
                     style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: Colors.green[700],
+                      color: isDark ? Colors.green[400] : Colors.green[700],
                     ),
                   ),
                 ],
@@ -226,17 +269,30 @@ Delimiters: ${result.usedDelimiters.join(', ')}
     String value,
     IconData icon,
   ) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? colorScheme.surface : Colors.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey[300]!),
+        border: Border.all(
+          color: isDark
+              ? colorScheme.outline.withValues(alpha: 0.3)
+              : Colors.grey[300]!,
+        ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 20, color: Colors.grey[600]),
+          Icon(
+            icon,
+            size: 20,
+            color: isDark
+                ? colorScheme.onSurface.withValues(alpha: 0.7)
+                : Colors.grey[600],
+          ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -245,17 +301,20 @@ Delimiters: ${result.usedDelimiters.join(', ')}
                 Text(
                   label,
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: Colors.grey[600],
+                    color: isDark
+                        ? colorScheme.onSurface.withValues(alpha: 0.7)
+                        : Colors.grey[600],
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   value,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'monospace',
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
+                    color: isDark ? colorScheme.onSurface : Colors.black87,
                   ),
                 ),
               ],

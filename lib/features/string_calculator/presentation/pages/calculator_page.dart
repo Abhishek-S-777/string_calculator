@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:string_calculator/core/theme/theme_provider.dart';
 import 'package:string_calculator/features/string_calculator/presentation/providers/calculator_state_provider.dart';
 import 'package:string_calculator/features/string_calculator/presentation/widgets/calculator_input_widget.dart';
 import 'package:string_calculator/features/string_calculator/presentation/widgets/calculator_result_widget.dart';
@@ -19,12 +20,12 @@ class CalculatorPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final calculatorState = ref.watch(calculatorStateProvider);
+    final isDarkMode = ref.watch(themeModeProvider);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: const Text('String Calculator Pro'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           IconButton(
             onPressed: () => ref.read(calculatorStateProvider.notifier).clear(),
@@ -70,6 +71,20 @@ class CalculatorPage extends ConsumerWidget {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          HapticFeedback.lightImpact();
+          ref.read(themeModeProvider.notifier).toggleTheme();
+        },
+        tooltip: isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode',
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          child: Icon(
+            isDarkMode ? Icons.light_mode : Icons.dark_mode,
+            key: ValueKey(isDarkMode),
+          ),
+        ),
       ),
     );
   }
@@ -125,9 +140,13 @@ class CalculatorPage extends ConsumerWidget {
                   vertical: 8.0,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.grey[100],
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.grey[300]!),
+                  border: Border.all(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.outline.withValues(alpha: 0.3),
+                  ),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,7 +161,11 @@ class CalculatorPage extends ConsumerWidget {
                     const SizedBox(height: 2),
                     Text(
                       description,
-                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.6),
+                      ),
                     ),
                   ],
                 ),
