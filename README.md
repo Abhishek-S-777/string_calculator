@@ -14,6 +14,10 @@ This project showcases enterprise-level Flutter development with:
 - **Material 3** design with adaptive dark/light themes
 - **Comprehensive error handling** with custom exceptions
 
+## 📱 Demo
+
+https://github.com/user-attachments/assets/9cadce24-52eb-4778-8db1-eef853fef5e6
+
 ## 🏗️ Architecture & Folder Structure
 
 ```dart
@@ -176,10 +180,6 @@ flutter test
 # Launch application
 flutter run
 ```
-
-## 📱 Screenshots & Demo
-
-*[Screenshots will be added here]*
 
 ---
 
