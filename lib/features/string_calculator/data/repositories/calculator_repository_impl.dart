@@ -6,7 +6,6 @@ import 'package:string_calculator/features/string_calculator/domain/repositories
 class CalculatorRepositoryImpl implements CalculatorRepository {
   static const List<String> _defaultDelimiters = [',', '\n'];
   static const String _customDelimiterPrefix = '//';
-  static const int _maxNumberValue = 1000;
 
   @override
   Future<CalculationResult> add(String numbers) async {
@@ -38,20 +37,15 @@ class CalculatorRepositoryImpl implements CalculatorRepository {
       // Validate numbers (check for negatives)
       _validateNumbers(allNumbers);
 
-      // Filter out numbers > 1000 (they are ignored in String Calculator kata)
-      final validNumbers = allNumbers
-          .where((number) => number <= _maxNumberValue)
-          .toList();
-
       // _calculate sum
-      final sum = validNumbers.fold<int>(
+      final sum = allNumbers.fold<int>(
         0,
         (previous, current) => previous + current,
       );
 
       return CalculationResult(
         sum: sum,
-        processedNumbers: validNumbers,
+        processedNumbers: allNumbers,
         usedDelimiters: parsedInput.delimiters,
         originalInput: parsedInput.rawInput,
       );
