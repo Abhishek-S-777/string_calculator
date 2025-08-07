@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:string_calculator/features/string_calculator/presentation/providers/calculator_state_provider.dart';
 import 'package:string_calculator/features/string_calculator/presentation/widgets/calculator_input_widget.dart';
@@ -12,7 +13,8 @@ class CalculatorPage extends ConsumerWidget {
   CalculatorPage({super.key});
 
   // GlobalKey to access the input widget
-  final GlobalKey<CalculatorInputWidgetState> _inputKey = GlobalKey<CalculatorInputWidgetState>();
+  final GlobalKey<CalculatorInputWidgetState> _inputKey =
+      GlobalKey<CalculatorInputWidgetState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -113,6 +115,7 @@ class CalculatorPage extends ConsumerWidget {
           Expanded(
             child: GestureDetector(
               onTap: () {
+                HapticFeedback.mediumImpact();
                 // Use the GlobalKey to call the public method
                 _inputKey.currentState?.setInputText(input);
               },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:string_calculator/features/string_calculator/presentation/providers/calculator_state_provider.dart';
 
@@ -75,6 +76,8 @@ class CalculatorInputWidgetState extends ConsumerState<CalculatorInputWidget> {
                 suffixIcon: inputText.isNotEmpty
                     ? IconButton(
                         onPressed: () {
+                          HapticFeedback.mediumImpact();
+
                           setState(() {
                             inputText = '';
                           });
@@ -118,7 +121,11 @@ class CalculatorInputWidgetState extends ConsumerState<CalculatorInputWidget> {
                   child: ElevatedButton.icon(
                     onPressed:
                         inputText.isNotEmpty && !calculatorState.isLoading
-                        ? () => calculatorNotifier.calculate(inputText)
+                        ? () {
+                            HapticFeedback.mediumImpact();
+
+                            calculatorNotifier.calculate(inputText);
+                          }
                         : null,
                     icon: calculatorState.isLoading
                         ? const SizedBox(
@@ -146,6 +153,8 @@ class CalculatorInputWidgetState extends ConsumerState<CalculatorInputWidget> {
                           calculatorState.hasResult ||
                           calculatorState.hasError
                       ? () {
+                          HapticFeedback.mediumImpact();
+
                           setState(() {
                             inputText = '';
                           });

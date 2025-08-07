@@ -130,6 +130,8 @@ class CalculatorResultWidget extends ConsumerWidget {
                 const Spacer(),
                 IconButton(
                   onPressed: () {
+                    HapticFeedback.mediumImpact();
+
                     final resultText =
                         '''
 Sum: ${result.sum}
