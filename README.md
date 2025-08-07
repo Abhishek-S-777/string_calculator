@@ -26,15 +26,17 @@ lib/
 │   ├── theme/                      
 │   │   ├── app_theme.dart         
 │   │   └── theme_provider.dart    
-│   ├── errors/                     
-│   └── utils/                      
+│   ├── errors/
+│   │   └── calculator_exception.dart
+│   ├── usecases/
+│   │   └── usecase.dart
+│   └── utils/
 │
 ├── features/                       
 │   └── string_calculator/         
 │       ├── domain/                 
 │       │   ├── entities/          
 │       │   │   ├── calculation_result.dart
-│       │   │   ├── calculator_config.dart
 │       │   │   └── parsed_input.dart
 │       │   ├── repositories/       
 │       │   │   └── calculator_repository.dart
@@ -44,8 +46,6 @@ lib/
 │       ├── data/                   
 │       │   ├── models/            
 │       │   │   ├── calculation_result_model.dart
-│       │   │   ├── calculator_config_model.dart
-│       │   │   └── parsed_input_model.dart
 │       │   └── repositories/       
 │       │       └── calculator_repository_impl.dart
 │       │
@@ -55,7 +55,6 @@ lib/
 │           ├── widgets/           
 │           │   ├── calculator_input_widget.dart
 │           │   ├── calculator_result_widget.dart
-│           │   └── calculator_controls_widget.dart
 │           └── providers/         
 │               ├── calculator_providers.dart
 │               └── calculator_state_provider.dart
