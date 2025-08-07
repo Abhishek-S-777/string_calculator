@@ -73,22 +73,6 @@ class CalculatorInputWidgetState extends ConsumerState<CalculatorInputWidget> {
                         borderSide: BorderSide(color: Colors.red[600]!),
                       )
                     : null,
-                suffixIcon: inputText.isNotEmpty
-                    ? IconButton(
-                        onPressed: () {
-                          HapticFeedback.mediumImpact();
-
-                          setState(() {
-                            inputText = '';
-                          });
-                          _controller.clear();
-                          _focusNode.unfocus();
-                          calculatorNotifier.clear();
-                        },
-                        icon: const Icon(Icons.clear),
-                        tooltip: 'Clear input',
-                      )
-                    : null,
               ),
               onChanged: (value) {
                 setState(() {
